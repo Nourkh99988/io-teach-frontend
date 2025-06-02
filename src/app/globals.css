@@ -1,26 +1,98 @@
+/* app/globals.css أو src/app/globals.css */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primarycolor: #4b2615;
+  --color-secondarycolor: #9333ea;
+  --color-backgroundcolor: #f3f3f3;
+  --color-backgroundcolor2: #fbfbfb;
+  --font-title: clamp(1.3rem, 1.7vw, 2.5rem);
+  --font-subtitle: clamp(1rem, 1.7vw, 2rem);
+  --font-fluid: clamp(1rem, 1.2vw, 1.5rem);
+  --font-description: clamp(0.8rem, 1.1vw, 1.5rem);
+  --padding-section: 4rem;
+  --gradient-customGradient: linear-gradient(271.47deg, rgba(75, 38, 21, 0.28) 1.2%, rgba(75, 38, 21, 0.68) 86.38%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    font-family: "dn-sans", sans-serif;
+  }
+
+  @variant dark {
+    :root {
+      --color-primary: #0f172a;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .text-base {
+    font-size: var(--font-fluid);
+  }
+  .text-title {
+    font-size: var(--font-title);
+  }
+  .text-subtitle {
+    font-size: var(--font-subtitle);
+  }
+  .text-description {
+    font-size: var(--font-description);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.team-carousel {
+  /* width: 90%; */
+}
+
+.team-carousel > ul {
+  /* background-color: red !important; */
+  /* width: 80%; */
+  /* margin: 0 auto; */
+}
+/* .carousel-container {
+  background-color: red;
+  width: 75%;
+  margin: auto;
+} */
+/* .carousel-container button:first-of-type {
+  background-color: red;
+  left: 0px;
+} */
+.custom-left-arrow,
+.custom-right-arrow {
+  position: absolute;
+  bottom: 4%;
+  /* transform: translateY(-50%); */
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-secondarycolor);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.custom-left-arrow {
+  right: 60px;
+}
+.custom-right-arrow {
+  right: 10px;
 }

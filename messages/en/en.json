@@ -1,0 +1,64 @@
+{
+  "home": {
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "services": "Our Services",
+      "blog": "Blog",
+      "team": "Our Team",
+      "contact": "Contact",
+      "search": "Search",
+      "searchPlaceholder": "Search articles...",
+      "bookAppointment": "Book Appointment",
+      "menu": "Menu",
+      "closeMenu": "Close menu"
+    },
+    "hero": {
+      "title": "Leading Law Firm in the Region",
+      "description": "We provide comprehensive legal services to our clients"
+    },
+    "slider": {
+      "readMore": "Read More"
+    }
+  },
+  "articles": {
+    "title": "Articles",
+    "searchResults": "Search results for:",
+    "noResults": "No articles found.",
+    "noResultsSearch": "No articles found matching your search.",
+    "readMore": "Read More",
+    "lastUpdate": "Last updated:",
+    "publishedAt": "Published at:"
+  },
+  "team": {
+    "title": "Our Team",
+    "subtitle": "Meet our expert team members who are dedicated to providing you with the best legal services",
+    "email": "Email",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "loading": "Loading team members...",
+    "fetchError": "Failed to load team members",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send"
+    }
+  },
+  "appointment": {
+    "title": "Book Appointment",
+    "success": "Your appointment has been booked successfully",
+    "error": "Error booking appointment"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "required": "This field is required",
+    "back": "Back"
+  }
+}
