@@ -3,19 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
-interface Client {
-  id: number;
-  name: string;
-  position: string;
-  paragraph: string;
-  photo: {
-    alt: string;
-    image: {
-      url: string;
-    };
-  };
-}
+import { Client, ClientResponse } from "@/types/client";
 
 const Clients = () => {
   const [clientReviews, setClientReviews] = useState<Client[]>([]);
@@ -26,7 +14,7 @@ const Clients = () => {
         const response = await fetch(
           "http://localhost:1337/api/clients?fields[0]=name&fields[1]=position&fields[2]=paragraph&populate[photo][populate][image][fields][0]=url&locale=en"
         );
-        const data = await response.json();
+        const data: ClientResponse = await response.json();
         setClientReviews(data.data);
       } catch (error) {
         console.error("Error fetching client reviews:", error);
@@ -58,8 +46,8 @@ const Clients = () => {
   return (
     <section className="py-16 px-4 bg-[--color-primarycolor]">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-4">What our clients are saying</h2>
-        <p className="text-center text-white/80 mb-12 max-w-2xl mx-auto">
+        <h2 className="text-title font-bold text-center text-white mb-4">What our clients are saying</h2>
+        <p className="text-description text-white/80 mb-12 max-w-2xl mx-auto">
           Our clients range from individual investors, to local, international as well as fortune 500 companies.
         </p>
 
@@ -79,23 +67,28 @@ const Clients = () => {
         >
           {clientReviews.map((client) => (
             <div key={client.id} className="px-4">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="relative h-[400px] w-full">
+              <div className="grid md:grid-cols-2 gap-8 items-center w-[] ">
+                <div
+                  className="relative h-[400px] w-auto"
+                  style={{ width: "27vw", maxWidth: "400px", minWidth: "200px", height: "auto" }}
+                >
                   <Image
                     src={`http://localhost:1337${client.photo.image.url}`}
                     alt={client.photo.alt}
-                    fill
+                    width={748}
+                    height={748}
                     className="object-cover rounded-lg"
+                    style={{ width: "27vw", maxWidth: "400px", minWidth: "200px", height: "auto" }}
                   />
                 </div>
                 <div className="text-white">
                   <svg className="h-12 w-12 text-white/20 mb-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
-                  <p className="text-lg mb-8 leading-relaxed">{client.paragraph}</p>
+                  <p className="text-base mb-8 leading-relaxed">{client.paragraph}</p>
                   <div>
-                    <h3 className="text-xl font-semibold">{client.name}</h3>
-                    <p className="text-white/80">{client.position}</p>
+                    <h3 className="text-subtitle font-semibold">{client.name}</h3>
+                    <p className="text-description text-white/80">{client.position}</p>
                   </div>
                 </div>
               </div>

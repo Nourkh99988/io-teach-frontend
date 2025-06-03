@@ -60,5 +60,27 @@
     "error": "Something went wrong",
     "required": "This field is required",
     "back": "Back"
+  },
+  "Modal": {
+    "defaultTitle": "Notification",
+    "ok": "OK",
+    "stayUpdated": "Stay updated with our latest news",
+    "followUs": "Follow us on social media"
+  },
+  "footer": {
+    "emailPlaceholder": "Email",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "subscribeSuccess": "Thank you for subscribing to our newsletter!",
+    "subscribeError": "Failed to subscribe. Please try again later.",
+    "error": "Error",
+    "success": "Success",
+    "contacts": "Contacts",
+    "about": "About",
+    "strategy": "Our Strategy",
+    "advantages": "Our Advantages",
+    "responsibility": "Social Responsibility",
+    "services": "Our Services",
+    "rights": "All rights reserved"
   }
 }

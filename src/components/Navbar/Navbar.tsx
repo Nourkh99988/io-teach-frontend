@@ -6,13 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-  slug: string;
-}
+import { Service, ServiceResponse } from "@/types/navbar";
 
 const Navbar = () => {
   const t = useTranslations("home.nav");
@@ -39,7 +33,7 @@ const Navbar = () => {
         const response = await fetch(
           `http://localhost:1337/api/services?fields[0]=title&fields[1]=description&fields[2]=slug&locale=${locale}`
         );
-        const data = await response.json();
+        const data: ServiceResponse = await response.json();
         setServices(data.data);
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -136,7 +130,7 @@ const Navbar = () => {
                     {services.map((service) => (
                       <li key={service.id} className="group relative">
                         <Link
-                          href={`/${service.slug}`}
+                          href={`/services/${service.slug}`}
                           className="block text-white hover:text-white/80 transition-colors duration-200 text-lg font-medium"
                         >
                           {service.title}

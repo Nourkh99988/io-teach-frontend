@@ -1,63 +1,80 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import SubscribeForm from "./SubscribeForm";
 
-const Footer = () => {
+const Footer = async () => {
+  const t = await getTranslations("footer");
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-[--color-primarycolor] text-white">
       {/* Top Section */}
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-end items-center gap-6">
-        <div className="flex items-center gap-2">
-          <input
-            type="email"
-            placeholder="Email"
-            className="px-4 py-2 bg-white rounded-sm text-[--color-primarycolor] outline-none"
-          />
-          <button className="px-4 py-2 bg-[--color-primarycolor] text-white border border-white rounded-sm hover:bg-white hover:text-[--color-primarycolor] transition-colors">
-            Subscribe
-          </button>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-center md:justify-end items-center gap-6">
+        {/* Subscribe Section */}
+        <SubscribeForm />
+
+        {/* Social Links */}
         <div className="flex items-center gap-4 text-white">
-          <Link href="/contacts" className="hover:opacity-80">
-            Contacts
+          <Link href="/contacts" className="hover:opacity-80 text-sm md:text-base">
+            {t("contacts")}
           </Link>
-          <Link href="#" className="hover:opacity-80">
-            <Image src="/assets/icons/facebook.svg" alt="Facebook" width={20} height={20} className="w-5 h-5" />
-          </Link>
-          <Link href="#" className="hover:opacity-80">
-            <Image src="/assets/icons/twitter.svg" alt="Twitter" width={20} height={20} className="w-5 h-5" />
-          </Link>
-          <Link href="#" className="hover:opacity-80">
-            <Image src="/assets/icons/google-plus.svg" alt="Google+" width={20} height={20} className="w-5 h-5" />
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="#" className="hover:opacity-80">
+              <Image
+                src="/assets/icons/facebook.svg"
+                alt="Facebook"
+                width={20}
+                height={20}
+                className="w-4 h-4 md:w-5 md:h-5"
+              />
+            </Link>
+            <Link href="#" className="hover:opacity-80">
+              <Image
+                src="/assets/icons/twitter.svg"
+                alt="Twitter"
+                width={20}
+                height={20}
+                className="w-4 h-4 md:w-5 md:h-5"
+              />
+            </Link>
+            <Link href="#" className="hover:opacity-80">
+              <Image
+                src="/assets/icons/google-plus.svg"
+                alt="Google+"
+                width={20}
+                height={20}
+                className="w-4 h-4 md:w-5 md:h-5"
+              />
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Bottom Section */}
       <div className="border-t border-white/20">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs sm:text-sm">
+            <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 md:gap-8">
               <Link href="/about" className="text-white hover:opacity-80">
-                About
+                {t("about")}
               </Link>
               <Link href="/strategy" className="text-white hover:opacity-80">
-                Our Strategy
+                {t("strategy")}
               </Link>
               <Link href="/advantages" className="text-white hover:opacity-80">
-                Our Advantages
+                {t("advantages")}
               </Link>
               <Link href="/responsibility" className="text-white hover:opacity-80">
-                Social Responsibility
+                {t("responsibility")}
               </Link>
               <Link href="/services" className="text-white hover:opacity-80">
-                Our Services
+                {t("services")}
               </Link>
             </div>
-            <p className="text-white">© {currentYear}. All rights reserved.</p>
+            <p className="text-white text-center md:text-left">
+              © {currentYear}. {t("rights")}.
+            </p>
           </div>
         </div>
       </div>

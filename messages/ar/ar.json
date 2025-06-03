@@ -60,5 +60,27 @@
     "error": "حدث خطأ ما",
     "required": "هذا الحقل مطلوب",
     "back": "رجوع"
+  },
+  "Modal": {
+    "defaultTitle": "تنبيه",
+    "ok": "موافق",
+    "stayUpdated": "ابق على اطلاع بآخر أخبارنا",
+    "followUs": "تابعنا على وسائل التواصل الاجتماعي"
+  },
+  "footer": {
+    "emailPlaceholder": "البريد الإلكتروني",
+    "subscribe": "اشتراك",
+    "subscribing": "جاري الاشتراك...",
+    "subscribeSuccess": "شكراً لاشتراكك في نشرتنا الإخبارية!",
+    "subscribeError": "فشل الاشتراك. الرجاء المحاولة مرة أخرى لاحقاً.",
+    "error": "خطأ",
+    "success": "تم بنجاح",
+    "contacts": "اتصل بنا",
+    "about": "من نحن",
+    "strategy": "استراتيجيتنا",
+    "advantages": "مميزاتنا",
+    "responsibility": "المسؤولية المجتمعية",
+    "services": "خدماتنا",
+    "rights": "جميع الحقوق محفوظة"
   }
 }

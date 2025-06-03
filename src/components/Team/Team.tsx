@@ -4,36 +4,7 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useLocale, useTranslations } from "next-intl";
-
-interface TeamMemberPhoto {
-  id: number;
-  alt: string;
-  image: {
-    id: number;
-    documentId: string;
-    url: string;
-  };
-}
-
-interface TeamMember {
-  id: number;
-  documentId: string;
-  name: string;
-  postion: string;
-  photo: TeamMemberPhoto;
-}
-
-interface TeamResponse {
-  data: TeamMember[];
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-}
+import { TeamMember, TeamResponse } from "@/types/team";
 
 const Team = () => {
   const locale = useLocale();
@@ -60,6 +31,7 @@ const Team = () => {
         setTeamMembers(data.data);
         setError(null);
       } catch (err) {
+        console.log(err);
         setError(t("fetchError"));
       } finally {
         setIsLoading(false);
@@ -110,10 +82,11 @@ const Team = () => {
 
   return (
     <section className="py-16 px-4 bg-[#F3F4F6]">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-title md:text-4xl font-bold text-center text-[#4A3223] mb-4">{t("title")}</h2>
+      <div className="max-w-7xl mx-auto relative">
+        <h2 className="text-title  font-bold text-center text-primarycolor mb-4">{t("title")}</h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto text-description">{t("subtitle")}</p>
-
+        <label className="custom-team-left-arrow" htmlFor="custom-left-button-for-team-carousel"></label>
+        <label className="custom-team-right-arrow" htmlFor="custom-right-button-for-team-carousel"></label>
         <Carousel
           responsive={responsive}
           infinite={true}
@@ -123,16 +96,18 @@ const Team = () => {
           customTransition="all 0.5s ease"
           transitionDuration={500}
           containerClass="carousel-container"
-          removeArrowOnDeviceType={["tablet", "mobile"]}
+          // removeArrowOnDeviceType={["tablet", "mobile"]}
           dotListClass="custom-dot-list"
           itemClass="carousel-item-padding-40-px"
           centerMode={false}
           className="team-carousel"
+          customLeftArrow={<button id="custom-left-button-for-team-carousel"></button>}
+          customRightArrow={<button id="custom-right-buttom-for-team-carusel"></button>}
         >
           {teamMembers.map((member) => (
-            <div key={member.id} className="px-4">
-              <div className="w-[20vw] max-w[300px] min-w[200px] mx-auto bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
-                <div className="relative h-80 w-full bg-[#4A3223]">
+            <div key={member.id} className="px-[1.05vw]">
+              <div className="w-[20vw] max-w-[300px] min-w-[200px] mx-auto bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
+                <div className="relative h-80  w-full bg-[#4A3223]">
                   <Image
                     src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${member.photo.image.url}`}
                     alt={member.photo.alt || member.name}

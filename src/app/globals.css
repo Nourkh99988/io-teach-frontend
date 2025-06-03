@@ -96,3 +96,32 @@
 .custom-right-arrow {
   right: 10px;
 }
+
+.team-carousel {
+  /* position: relative; */
+  margin: auto;
+  width: 63vw;
+  max-width: 1000px;
+  overflow: visible;
+}
+.custom-team-left-arrow,
+.custom-team-right-arrow {
+  position: absolute;
+  bottom: 50%;
+  transform: translateY(50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-secondarycolor);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-team-left-arrow {
+  right: 90px;
+}
+.custom-team-right-arrow {
+  left: 90px;
+}

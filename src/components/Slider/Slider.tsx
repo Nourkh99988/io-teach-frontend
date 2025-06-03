@@ -4,19 +4,7 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useLocale, useTranslations } from "next-intl";
-
-interface SliderData {
-  id: number;
-  title: string;
-  description: string;
-  link: string;
-  photo: {
-    alt: string;
-    image: {
-      url: string;
-    };
-  };
-}
+import { SliderData, SliderResponse } from "@/types/slider";
 
 export default function Slider() {
   const [sliders, setSliders] = useState<SliderData[]>([]);
@@ -29,7 +17,7 @@ export default function Slider() {
         const response = await fetch(
           `http://localhost:1337/api/sliders?fields[0]=title&fields[1]=description&fields[2]=link&populate[photo][populate][image][fields][0]=url&locale=${locale}`
         );
-        const data = await response.json();
+        const data: SliderResponse = await response.json();
         setSliders(data.data);
       } catch (error) {
         console.error("Error fetching slider data:", error);
@@ -80,9 +68,13 @@ export default function Slider() {
       sliderClass=""
       slidesToSlide={1}
       swipeable
+      removeArrowOnDeviceType={["tablet", "mobile"]}
     >
       {sliders.map((slide) => (
-        <div key={slide.id} className="w-full px-36 flex justify-between items-center">
+        <div
+          key={slide.id}
+          className="w-full px-0.5 sm:px-4 md:px-36 flex flex-col-reverse sm:flex-row justify-between items-center"
+        >
           <div className="flex flex-col gap-4">
             <h2 className="text-white text-subtitle font-bold">{slide.title}</h2>
             <p className="text-white text-description">{slide.description}</p>
