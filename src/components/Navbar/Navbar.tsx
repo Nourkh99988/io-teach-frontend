@@ -34,6 +34,8 @@ const Navbar = () => {
           `http://localhost:1337/api/services?fields[0]=title&fields[1]=description&fields[2]=slug&locale=${locale}`
         );
         const data: ServiceResponse = await response.json();
+        console.log("Fetched services:", data);
+
         setServices(data.data);
       } catch (error) {
         console.error("Error fetching services:", error);

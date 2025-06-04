@@ -5,6 +5,10 @@ export interface Service {
   slug: string;
 }
 
+export interface Services {
+  services: Service[];
+}
+
 export interface ServiceResponse {
   data: Service[];
 }
