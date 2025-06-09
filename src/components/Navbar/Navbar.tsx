@@ -3,21 +3,37 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { useRouter } from "@/i18n/navigation";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
-import { Service, ServiceResponse } from "@/types/navbar";
+import { Service } from "@/types/navbar";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { setServices } from "@/lib/redux/slices/servicesSlice";
 
-const Navbar = () => {
+const Navbar = ({ services }: { services: Service[] }) => {
   const t = useTranslations("home.nav");
   const locale = useLocale();
   const router = useRouter();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [services, setServices] = useState<Service[]>([]);
+  const [servicesState, setServicesState] = useState<Service[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const servicesStore = useSelector((state: RootState) => state.services.services);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setServices(services));
+    if (servicesStore.length > 0) {
+      setServicesState(servicesStore);
+    } else {
+      setServicesState(services);
+    }
+  }, [services, locale]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,24 +41,6 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:1337/api/services?fields[0]=title&fields[1]=description&fields[2]=slug&locale=${locale}`
-        );
-        const data: ServiceResponse = await response.json();
-        console.log("Fetched services:", data);
-
-        setServices(data.data);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
-    };
-
-    fetchServices();
   }, [locale]);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -76,7 +74,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <Image src="/assets/logo.svg" alt="Logo" width={120} height={40} />
+          <Image src="/assets/logo.png" alt="Logo" width={60} height={40} />
         </Link>
 
         {/* Hamburger Menu Button */}
@@ -129,7 +127,7 @@ const Navbar = () => {
               <div className="bg-primarycolor shadow-lg py-8 mt-2">
                 <div className="px-6">
                   <ul className="space-y-4">
-                    {services.map((service) => (
+                    {servicesState.map((service) => (
                       <li key={service.id} className="group relative">
                         <Link
                           href={`/services/${service.slug}`}
@@ -189,6 +187,30 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Language Switcher */}
+          <div className="relative group">
+            <button className="flex items-center gap-2 text-white hover:opacity-80">
+              <Image
+                src="/assets/icons/lang_switcher.png"
+                alt={locale === "ar" ? "English" : "العربية"}
+                width={20}
+                height={20}
+              />
+              {/* <span>{locale === "ar" ? "English" : "العربية"}</span> */}
+              {locale !== "ar" && (
+                <Link href={pathname} locale="ar">
+                  العربية
+                </Link>
+              )}
+              {locale !== "en" && (
+                <Link href={pathname} locale="en">
+                  English
+                </Link>
+              )}
+            </button>
+            {/* <div className="absolute right-0 mt-2 py-2 w-32 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"></div> */}
+          </div>
+
           {/* Book Appointment Button */}
           <Link
             href="/appointment"
@@ -244,7 +266,7 @@ const Navbar = () => {
 
                 {isServicesOpen && (
                   <ul className="pl-4 space-y-3">
-                    {services.map((service) => (
+                    {servicesState.map((service) => (
                       <li key={service.id}>
                         <Link
                           href={`/${service.slug}`}

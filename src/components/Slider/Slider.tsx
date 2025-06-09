@@ -1,31 +1,30 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useLocale, useTranslations } from "next-intl";
-import { SliderData, SliderResponse } from "@/types/slider";
+import { useTranslations } from "next-intl";
+import { SliderData } from "@/types/slider";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "@/lib/redux/store";
+import { useEffect } from "react";
+import { setSliders } from "@/lib/redux/slices/sliderSlice";
+import { RootState } from "@/lib/redux/store";
+import { useLocale } from "next-intl";
 
-export default function Slider() {
-  const [sliders, setSliders] = useState<SliderData[]>([]);
+export default function SliderClient({ sliders }: { sliders: SliderData[] }) {
   const t = useTranslations("home.slider");
   const locale = useLocale();
-  //  const dir = locale === "ar" ? "rtl" : "ltr";
+  const dispatch = useDispatch<AppDispatch>();
+  const slidersState = useSelector((state: RootState) => state.slider.sliders);
   useEffect(() => {
-    const fetchSliders = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:1337/api/sliders?fields[0]=title&fields[1]=description&fields[2]=link&populate[photo][populate][image][fields][0]=url&locale=${locale}`
-        );
-        const data: SliderResponse = await response.json();
-        setSliders(data.data);
-      } catch (error) {
-        console.error("Error fetching slider data:", error);
-      }
-    };
+    dispatch(setSliders(sliders));
 
-    fetchSliders();
-  }, []);
+    if (slidersState.length > 0) {
+      setSliders(slidersState);
+    } else {
+      setSliders(sliders);
+    }
+  }, [sliders, locale]);
 
   return (
     <Carousel

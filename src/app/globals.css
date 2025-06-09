@@ -57,7 +57,11 @@
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
 }
-
+.header-carousel,
+.team-carousel,
+.client-carousel {
+  margin: auto;
+}
 .team-carousel {
   /* width: 90%; */
 }
@@ -76,24 +80,26 @@
   background-color: red;
   left: 0px;
 } */
-.custom-left-arrow,
-.custom-right-arrow {
+.client-left-arrow,
+.client-right-arrow {
   position: absolute;
   bottom: 4%;
   /* transform: translateY(-50%); */
   z-index: 10;
   width: 40px;
   height: 40px;
-  background-color: var(--color-secondarycolor);
+  /* background-color: var(--color-secondarycolor); */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
-.custom-left-arrow {
+.client-left-arrow {
   right: 60px;
+  transform: rotate(180deg);
 }
-.custom-right-arrow {
+.client-right-arrow {
   right: 10px;
 }
 
@@ -103,7 +109,15 @@
   width: 63vw;
   max-width: 1000px;
   overflow: visible;
+  direction: ltr;
 }
+
+/* .carousel-team-item {
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+  height: 80px;
+} */
 .custom-team-left-arrow,
 .custom-team-right-arrow {
   position: absolute;
@@ -112,11 +126,12 @@
   z-index: 10;
   width: 40px;
   height: 40px;
-  background-color: var(--color-secondarycolor);
+  /* background-color: var(--color-secondarycolor); */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .custom-team-left-arrow {
@@ -124,4 +139,6 @@
 }
 .custom-team-right-arrow {
   left: 90px;
+  transform: rotate(180deg);
+  /* background-color: red; */
 }

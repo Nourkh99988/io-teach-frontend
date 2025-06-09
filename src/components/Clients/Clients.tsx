@@ -3,26 +3,41 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Client, ClientResponse } from "@/types/client";
-
-const Clients = () => {
+import { Client } from "@/types/client";
+import { useLocale } from "next-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/lib/redux/store";
+import { setClients } from "@/lib/redux/slices/ClientsSlice";
+import { useTranslations } from "next-intl";
+const Clients = ({ clients }: { clients: Client[] }) => {
+  const locale = useLocale();
+  const t = useTranslations("clients");
+  const dispatch = useDispatch<AppDispatch>();
+  const clientReviewsStore = useSelector((state: RootState) => state.clients);
   const [clientReviews, setClientReviews] = useState<Client[]>([]);
 
   useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:1337/api/clients?fields[0]=name&fields[1]=position&fields[2]=paragraph&populate[photo][populate][image][fields][0]=url&locale=en"
-        );
-        const data: ClientResponse = await response.json();
-        setClientReviews(data.data);
-      } catch (error) {
-        console.error("Error fetching client reviews:", error);
-      }
-    };
+    dispatch(setClients(clients));
+    if (clientReviewsStore.length > 0) {
+      setClientReviews(clientReviewsStore);
+    } else {
+      setClientReviews(clients);
+    }
 
-    fetchClients();
-  }, []);
+    // const fetchClients = async () => {
+    //   try {
+    //     const response = await fetch(
+    //       "http://localhost:1337/api/clients?fields[0]=name&fields[1]=position&fields[2]=paragraph&populate[photo][populate][image][fields][0]=url&locale=en"
+    //     );
+    //     const data: ClientResponse = await response.json();
+    //     setClientReviews(data.data);
+    //   } catch (error) {
+    //     console.error("Error fetching client reviews:", error);
+    //   }
+    // };
+
+    // fetchClients();
+  }, [clients, locale]);
 
   const responsive = {
     superLargeDesktop: {
@@ -46,10 +61,8 @@ const Clients = () => {
   return (
     <section className="py-16 px-4 bg-[--color-primarycolor]">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-title font-bold text-center text-white mb-4">What our clients are saying</h2>
-        <p className="text-description text-white/80 mb-12 max-w-2xl mx-auto">
-          Our clients range from individual investors, to local, international as well as fortune 500 companies.
-        </p>
+        <h2 className="text-title font-bold text-center text-white mb-4">{t("title")}</h2>
+        <p className="text-description text-white/80 mb-12 max-w-2xl mx-auto">{t("description")}</p>
 
         <Carousel
           responsive={responsive}
@@ -60,10 +73,19 @@ const Clients = () => {
           customTransition="all 0.5s ease"
           transitionDuration={500}
           containerClass="carousel-container"
-          dotListClass="custom-dot-list-style"
+          // dotListClass="client-dot-list-style"
           itemClass="px-4"
-          customLeftArrow={<button className="custom-left-arrow"></button>}
-          customRightArrow={<button className="custom-right-arrow"></button>}
+          className="client-carousel"
+          customLeftArrow={
+            <button className="client-left-arrow">
+              <Image src="/assets/icons/left-arrow.png" alt="Left Arrow" width={40} height={40} />
+            </button>
+          }
+          customRightArrow={
+            <button className="client-right-arrow">
+              <Image src="/assets/icons/right-arrow.png" alt="Right Arrow" width={40} height={40} />
+            </button>
+          }
         >
           {clientReviews.map((client) => (
             <div key={client.id} className="px-4">
@@ -95,30 +117,6 @@ const Clients = () => {
             </div>
           ))}
         </Carousel>
-
-        {/* Navigation Dots Styles */}
-        <style jsx global>{`
-          .custom-dot-list-style {
-            display: flex;
-            justify-center: center;
-            gap: 8px;
-            margin-top: 2rem;
-          }
-          .custom-dot-list-style button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            padding: 0;
-            margin: 0;
-            transition: all 0.3s ease;
-          }
-          .custom-dot-list-style .react-multi-carousel-dot--active button {
-            background: white;
-            transform: scale(1.2);
-          }
-        `}</style>
       </div>
     </section>
   );

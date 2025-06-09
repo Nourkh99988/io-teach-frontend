@@ -1,5 +1,5 @@
 import HeadBG from "@/components/HeadBG/HeadBG";
-import Navbar from "@/components/Navbar/Navbar";
+// import Navbar from "@/components/Navbar/Navbar";
 import { ArticleResponse } from "@/types/article";
 import ArticleCard from "@/components/ArticleCard/ArticleCard";
 import Link from "next/link";
@@ -40,19 +40,19 @@ export default async function ArticlesPage({
   params,
   searchParams,
 }: {
-  params: { locale: string };
-  searchParams: { page?: string; search?: string };
+  params: Promise<{ locale: string }>;
+  searchParams?: Promise<{ page?: string; search?: string }>;
 }) {
-  const currentPage = Number(searchParams.page) || 1;
-  const searchQuery = searchParams.search || "";
-
-  const { data: articles, meta } = await getArticles(currentPage, searchQuery, params.locale);
+  const currentPage = Number((await searchParams)?.page) || 1;
+  const searchQuery = (await searchParams)?.search || "";
+  const { locale } = await params;
+  const { data: articles, meta } = await getArticles(currentPage, searchQuery, locale);
   const t = await getTranslations("articles");
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <HeadBG />
+      {/* <Navbar /> */}
+      <HeadBG height="50vh" />
 
       <main className="container mx-auto px-4 py-12">
         {/* Search Results Info */}
@@ -67,7 +67,7 @@ export default async function ArticlesPage({
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
-            <ArticleCard key={article.id} article={article} locale={params.locale} />
+            <ArticleCard key={article.id} article={article} locale={locale} />
           ))}
         </div>
 
@@ -90,7 +90,7 @@ export default async function ArticlesPage({
               return (
                 <Link
                   key={index}
-                  href={`/${params.locale}/articles?${pageUrl.toString()}`}
+                  href={`/${locale}/articles?${pageUrl.toString()}`}
                   className={`px-4 py-2 rounded ${
                     currentPage === pageNumber
                       ? "bg-primarycolor text-white"

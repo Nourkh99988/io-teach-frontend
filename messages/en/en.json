@@ -1,4 +1,12 @@
 {
+  "loading": {
+    "pleaseWait": "Loading..."
+  },
+  "notFound": {
+    "pageNotFound": "Page Not Found",
+    "description": "Sorry, the page you are looking for does not exist or has been moved.",
+    "backToHome": "Back to Home"
+  },
   "home": {
     "nav": {
       "home": "Home",
@@ -66,6 +74,10 @@
     "ok": "OK",
     "stayUpdated": "Stay updated with our latest news",
     "followUs": "Follow us on social media"
+  },
+  "clients": {
+    "title": "Our clients range from individual investors, to local, international as well as fortune 500 companies.",
+    "description": "Our clients range from individual investors, to local, international as well as fortune 500 companies."
   },
   "footer": {
     "emailPlaceholder": "Email",

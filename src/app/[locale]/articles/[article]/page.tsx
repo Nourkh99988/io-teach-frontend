@@ -1,5 +1,5 @@
 import HeadBG from "@/components/HeadBG/HeadBG";
-import Navbar from "@/components/Navbar/Navbar";
+// import Navbar from "@/components/Navbar/Navbar";
 import { formatDate } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 
@@ -52,19 +52,15 @@ async function getArticle(slug: string): Promise<Article | null> {
   }
 }
 
-export default async function ArticlePage({
-  params,
-}: {
-  params: { locale: string; article: string };
-}) {
+export default async function ArticlePage({ params }: { params: { locale: string; article: string } }) {
   const article = await getArticle(params.article);
 
   if (!article) {
     return (
       <div className="min-h-screen bg-gray-50">
         <section>
-          <Navbar />
-          <HeadBG />
+          {/* <Navbar /> */}
+          <HeadBG height="50vh" />
         </section>
         <main className="container mx-auto px-4 py-12">
           <p className="text-center text-gray-600">المقال غير موجود.</p>
@@ -76,26 +72,19 @@ export default async function ArticlePage({
   return (
     <div className="min-h-screen bg-gray-50">
       <section>
-        <Navbar />
-        <HeadBG />
+        {/* <Navbar /> */}
+        <HeadBG height="50vh" />
       </section>
 
       <main className="container mx-auto px-4 py-12">
         <article className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden p-8">
           <header className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {article.title}
-            </h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">{article.title}</h1>
             <p className="text-gray-600 mb-4">{article.description}</p>
             <div className="text-sm text-gray-500">
-              <time dateTime={article.createdAt}>
-                {formatDate(article.createdAt, params.locale)}
-              </time>
+              <time dateTime={article.createdAt}>{formatDate(article.createdAt, params.locale)}</time>
               {article.updatedAt !== article.createdAt && (
-                <span className="mr-2">
-                  • تم التحديث:{" "}
-                  {formatDate(article.updatedAt, params.locale)}
-                </span>
+                <span className="mr-2">• تم التحديث: {formatDate(article.updatedAt, params.locale)}</span>
               )}
             </div>
           </header>

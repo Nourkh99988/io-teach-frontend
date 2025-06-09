@@ -1,5 +1,4 @@
 import HeadBG from "@/components/HeadBG/HeadBG";
-import Navbar from "@/components/Navbar/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer/Footer";
@@ -103,7 +102,6 @@ export default async function ServicePage({ params }: { params: Promise<{ locale
   return (
     <main className="min-h-screen bg-backgroundcolor2">
       <section>
-        <Navbar />
         <HeadBG />
       </section>
 
